@@ -1,23 +1,30 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(DT)
+library(shinythemes)
 
 bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
 
 ui <- fluidPage(
-  titlePanel("BC Liquor Store prices"),
+  theme = shinytheme("paper"), #Choose Shiny Theme
+  titlePanel("BC Liquor Store Beverages",
+             windowTitle = "BC Liquor App"),
   sidebarLayout(
     sidebarPanel(
-      sliderInput("priceInput", "Price", 0, 100, c(25, 40), pre = "$"),
+      sliderInput("priceInput", "Price", min = 0, max = 100, value = c(5, 40), pre = "$"),
       radioButtons("typeInput", "Product type",
-                  choices = c("BEER", "REFRESHMENT", "SPIRITS", "WINE"),
-                  selected = "WINE"),
-      uiOutput("countryOutput")
+                   choices = c("BEER", "REFRESHMENT", "SPIRITS", "WINE"),
+                   selected = "WINE"),
+      uiOutput("countryOutput"),
+      checkboxInput("sortPrice", label = "Sort by Price", value = FALSE)
     ),
     mainPanel(
-      plotOutput("coolplot"),
-      br(), br(),
-      tableOutput("results")
+      plotOutput("coolplot"),  #Output plot
+      br(), br(), #Line breaks
+      downloadButton(outputId = "downloadTable", label = "Download Table"), #Download button
+      br(), br(), #Line breaks
+      DT::dataTableOutput("results") #Output table
     )
   )
 )
@@ -39,20 +46,35 @@ server <- function(input, output) {
              Price <= input$priceInput[2],
              Type == input$typeInput,
              Country == input$countryInput
-      )
+      ) 
   })
   
   output$coolplot <- renderPlot({
     if (is.null(filtered())) {
       return()
     }
-    ggplot(filtered(), aes(Alcohol_Content)) +
-      geom_histogram()
+    ggplot(filtered(), aes(Alcohol_Content)) + #Histogram functionality
+      geom_histogram(fill = "red", color = "red") +
+      theme_bw() +
+      labs(title = "Beverage Prices", x = "Alcohol Content", y = "Count")
   })
-
-  output$results <- renderTable({
-    filtered()
+  
+  output$results <- DT::renderDataTable({ #Render interactive table
+    if (input$sortPrice == TRUE) {
+      filtered() %>%
+        arrange(Price)
+    } else { 
+      filtered()
+    }
   })
+  
+  output$downloadTable <- downloadHandler( #Download Button Functionality
+    filename = "bc_liquor_results.csv",
+    content = function(file) {
+      write.csv(filtered(), file) #Remember parentheses when calling a reactive variable like filtered
+    }
+  )
 }
 
+#Run Application
 shinyApp(ui = ui, server = server)

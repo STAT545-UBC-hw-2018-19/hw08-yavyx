@@ -1,0 +1,12 @@
+name: bcl_app
+title: bcl_app
+username:
+account: yavyx
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 584316
+bundleId: 1714134
+url: https://yavyx.shinyapps.io/bcl_app/
+when: 1542847675.41844
+asMultiple: FALSE
+asStatic: FALSE

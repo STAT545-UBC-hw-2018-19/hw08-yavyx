@@ -1,23 +1,23 @@
-Homework 08: Making a Shiny App
-================
+---
+title: "Homework 08: Making a Shiny App"
+output: github_document
+---
 
-#### Author: Javier Castillo-Arnemann
+####Author: Javier Castillo-Arnemann
 
 This is a repository containing the 3rd assignment of the **STAT 547** course. The course main page can be found [here](http://stat545.com/Classroom). The instructions for this assignment can be accesed [here](http://stat545.com/Classroom/assignments/hw08/hw08.html).
 
 For this assignment, I added the following features to the basic BCL app:
 
--   Edited the histogram so it has a nicer presentation
--   Used the [`DT` (DataTables)](https://rstudio.github.io/DT/) package to make the table interactive.
--   Added a download button.
--   Added a sort by price check box.
--   Changed the app's theme with [Shiny Themes](https://rstudio.github.io/shinythemes/) package.
+- Edited the histogram so it has a nicer presentation
+- Used the [`DT` (DataTables)](https://rstudio.github.io/DT/) package to make the table interactive.
+- Added a download button.
+- Added a sort by price check box.
+- Changed the app's theme with [Shiny Themes](https://rstudio.github.io/shinythemes/) package.
 
 The app can be found [here](https://yavyx.shinyapps.io/bcl_app/).
 
 The app was derived from [Dean Attali's Shiny tutorial](https://deanattali.com/blog/building-shiny-apps-tutorial). The code can specifically be found [here](https://deanattali.com/blog/building-shiny-apps-tutorial/#12-final-shiny-app-code). The data anlyzed in the app can be found [here]().
 
-Resources
----------
-
--   [Shinyapps.io - Getting started](http://shiny.rstudio.com/articles/shinyapps.html)
+##Resources
+- [Shinyapps.io - Getting started](http://shiny.rstudio.com/articles/shinyapps.html)
